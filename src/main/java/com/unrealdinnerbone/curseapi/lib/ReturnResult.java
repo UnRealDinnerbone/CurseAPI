@@ -1,15 +1,14 @@
 package com.unrealdinnerbone.curseapi.lib;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class ReturnResult<T>
 {
     private final static JsonParser PARSER = new JsonParser();
     private final String value;
-    private Class<T> tClass;
+    private final Class<T> tClass;
+    private T t;
 
     public ReturnResult(String value, Class<T> tClass) {
         this.value = value;
@@ -21,7 +20,10 @@ public class ReturnResult<T>
     }
 
     public T get() {
-        return JsonUtil.getBasicGson().fromJson(value, tClass);
+        if(t == null) {
+            t = JsonUtil.getBasicGson().fromJson(value, tClass);
+        }
+        return t;
     }
 
     public String getReformtedJson() {
