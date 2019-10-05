@@ -35,7 +35,7 @@ public class CurseAPIUtils
     }
 
     public synchronized static long formatTime(String time) {
-        String fixedTime = time.replace("T", " ");
+        String fixedTime = time.replace("T", " ").replace("Z", "");
         return TimeUtil.formatTime(fixedTime, curseDateFormats);
     }
 

@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class AddonCurseFile
+public class AddonCurseFile implements ICurseFile
 {
     private int id;
     private String displayName;

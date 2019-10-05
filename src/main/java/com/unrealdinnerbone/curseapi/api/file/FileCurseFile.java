@@ -4,8 +4,11 @@ import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 import com.unrealdinnerbone.curseapi.api.addon.Dependency;
+import com.unrealdinnerbone.curseapi.api.addon.ICurseFile;
+import lombok.Getter;
 
-public class FileCurseFile{
+@Getter
+public class FileCurseFile implements ICurseFile {
 
 	private int id;
 	private String displayName;
