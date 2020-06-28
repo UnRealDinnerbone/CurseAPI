@@ -17,7 +17,10 @@ plugins {
 }
 
 group 'com.unrealdinnerbone'
-version '0.0.0'
+
+def ENV = System.getenv()
+def buildNumber = ENV.GITHUB_RUN_NUMBER ? "${ENV.GITHUB_RUN_NUMBER}" : "0"
+version = project.getProperty("version") + ("+build." + buildNumber).replace("\\", "")
 
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
@@ -31,7 +34,8 @@ repositories {
 }
 
 dependencies {
-    implementation project(":UnRealLib")
+    compile 'com.unrealdinnerbone:UnRealLib:1.0.0+build.27'
+
 
     implementation "org.projectlombok:lombok:1.18.2"
 
