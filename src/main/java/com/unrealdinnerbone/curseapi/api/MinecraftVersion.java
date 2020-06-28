@@ -1,7 +1,5 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import javax.annotation.Generated;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 @Getter

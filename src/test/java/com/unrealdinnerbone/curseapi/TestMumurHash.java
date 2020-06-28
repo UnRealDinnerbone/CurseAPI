@@ -11,10 +11,6 @@ public class TestMumurHash
 {
     @Test
     public void test() {
-        File file = FileHelper.getOrCreateFolder("test");
-        FileHelper.getFilesTypesInFolder(file, "jar").forEach(file1 -> {
-            log.debug(FileHelper.getFilesMurmurHash(file1) + "");
-        });
 
     }
 }

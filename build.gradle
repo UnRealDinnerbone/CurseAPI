@@ -11,6 +11,7 @@ buildscript {
 
 
 plugins {
+    id "maven-publish"
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'java'
 }
@@ -18,17 +19,49 @@ plugins {
 group 'com.unrealdinnerbone'
 version '0.0.0'
 
-sourceCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
 
 repositories {
     mavenCentral()
+    maven {
+        url = "https://maven.unreal.codes/repository/unreal/"
+        name = "UnReal Maven"
+    }
 }
 
 dependencies {
-//    compile project(":UnRealLib")
+    implementation project(":UnRealLib")
+
+    implementation "org.projectlombok:lombok:1.18.2"
+
     annotationProcessor "org.projectlombok:lombok:1.18.2"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }
+
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            version = project.getProperty("version")
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://maven.unreal.codes/repository/unreal/"
+            credentials {
+                username ENV.MAVEN_USERNAME
+                password ENV.MAVEN_PASSWORD
+            }
+
+        }
+    }
+}
+
+
 
 

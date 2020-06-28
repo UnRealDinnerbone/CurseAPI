@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
-@Slf4j
 public class JsonMatchTest
 {
     @Test
@@ -74,7 +73,7 @@ public class JsonMatchTest
         Assert.assertNotNull(returnResult.get());
         Assert.assertNotNull(returnResult.getReformtedJson());
         Assert.assertNotNull(returnResult.getRawValue());
-        log.debug(returnResult.getFormattedJson());
+        System.out.println(returnResult.getFormattedJson());
         Assert.assertEquals(returnResult.getFormattedJson(), returnResult.getReformtedJson());
     }
 

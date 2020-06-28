@@ -1,6 +1,5 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import com.unrealdinnerbone.curseapi.api.base.ICategory;
 import lombok.Getter;
 
 @Getter

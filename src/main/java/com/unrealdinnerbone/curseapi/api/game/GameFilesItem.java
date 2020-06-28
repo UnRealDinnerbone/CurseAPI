@@ -1,7 +1,5 @@
 package com.unrealdinnerbone.curseapi.api.game;
 
-import javax.annotation.Generated;
-import com.google.gson.annotations.SerializedName;
 
 public class GameFilesItem{
 

@@ -1,8 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.file;
 
 import java.util.List;
-import javax.annotation.Generated;
-import com.google.gson.annotations.SerializedName;
 import com.unrealdinnerbone.curseapi.api.addon.Dependency;
 import com.unrealdinnerbone.curseapi.api.addon.ICurseFile;
 import lombok.Getter;
