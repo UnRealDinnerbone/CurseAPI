@@ -20,11 +20,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class CurseHelper {
+
+        public static DecimalFormat df2 = new DecimalFormat("#.##");
+
 
 //        public static HashMap<Long, File> getFilesHashesMap(File folder) {
 //            HashMap<Long, File> map = new HashMap<>();
@@ -39,7 +44,7 @@ public class CurseHelper {
                 curseFiles = filterFiles(list, minecraftVersion, releaseType);
             }
             if(curseFiles.size() == 0) {
-                log.error("There is now {} version of better for {} mod", releaseType.name(), fingerprintMatch.getFile().getFileName());
+                log.error("There is not a better version {} mod with the release type {}", fingerprintMatch.getFile().getFileName(), releaseType.name());
                 return null;
             }
             return ArrayUtil.getLastValue(curseFiles);
@@ -87,8 +92,14 @@ public class CurseHelper {
         List<Integer> allAddons = new ArrayList<>();
         log.info("Starting Search for all addons for {} with the selection {}", gameId, minecraftSection.name());
         log.warn("This will take a few minutes");
-        Arrays.stream(CurseAPI.getMinecraftVersionsList().get()).parallel().forEach(minecraftVersion -> {
-            for (Catergory catergory : CurseAPI.getCategoryList().get()) {
+        List<MinecraftVersion> minecraftVersions = Arrays.asList(CurseAPI.getMinecraftVersionsList().get());
+        List<Catergory> catergoriesList = Arrays.stream(CurseAPI.getCategoryList().get()).filter(catergory -> catergory.getRootGameCategoryId() != null).filter(catergory -> catergory.getGameId() == gameId).filter(catergory -> catergory.getRootGameCategoryId() == minecraftSection.getSectionID()).collect(Collectors.toList());
+        int amount = minecraftVersions.size() * catergoriesList.size();
+        AtomicInteger runCount = new AtomicInteger();
+        minecraftVersions.stream().parallel().forEach(minecraftVersion -> {
+            catergoriesList.parallelStream().forEach(catergory -> {
+                String percent = df2.format(((double) runCount.getAndIncrement() / (double) amount) * 100);
+                log.info("[{}%]: scan for all on {} and category {}", percent, minecraftVersion.getVersionString(), catergory.getName());
                 if (catergory.getGameId() == gameId) {
                     ReturnResult<Addon[]> returnResult = CurseAPI.getAddons(gameId, starIndex, minecraftVersion.getVersionString(), catergory.getId(), minecraftSection);
                     if (returnResult.get() != null) {
@@ -101,8 +112,7 @@ public class CurseHelper {
                     }
 
                 }
-
-            }
+            });
         });
         log.info("Found {} addons", allAddons.size());
         return allAddons;

@@ -8,7 +8,7 @@ public class Constants
     @Getter
     public static enum MinecraftSections {
         TEXTURE_PACKS(12),
-        MODPAKCS(4471),
+        MODPACKS(4471),
         MODS(6),
         WORLDS(17);
 

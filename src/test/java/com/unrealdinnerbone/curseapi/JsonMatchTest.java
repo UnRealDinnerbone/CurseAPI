@@ -17,7 +17,7 @@ public class JsonMatchTest
     }
     @Test
     public void testAddonsFile() {
-        test(CurseAPI.getAddonFileInfo(238222, 2682936));
+        test(CurseAPI.getAddonFileInfo(396803, 3035339));
     }
 
     @Test

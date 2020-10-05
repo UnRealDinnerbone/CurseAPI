@@ -3,7 +3,7 @@ package com.unrealdinnerbone.curseapi.api;
 import lombok.Getter;
 
 @Getter
-public class ModLoader{
+public class ModLoader {
 
 	private String name;
 	private String gameVersion;
