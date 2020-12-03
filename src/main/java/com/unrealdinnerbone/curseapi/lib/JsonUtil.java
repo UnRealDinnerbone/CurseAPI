@@ -8,12 +8,9 @@ import java.math.BigDecimal;
 
 public class JsonUtil
 {
-    @Getter private static final Gson basicGson;
-
-    static {
-        basicGson = new GsonBuilder().disableHtmlEscaping()
+    @Getter private static final Gson basicGson = new GsonBuilder().disableHtmlEscaping()
                 .setPrettyPrinting()
                 .serializeNulls()
                 .create();
-    }
+
 }

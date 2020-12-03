@@ -26,7 +26,7 @@ public class CurseAPIUtils
         return HttpUtils.get(url);
     }
 
-    public static String post(String dataURL, Object dataMap)  {
+    public static String post(String dataURL, Object dataMap) {
         return HttpUtils.post(getURL(dataURL), dataMap, null);
     }
 

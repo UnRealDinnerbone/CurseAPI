@@ -67,7 +67,7 @@ public class JsonMatchTest
         test(CurseAPI.getGameInfo(432));
     }
 
-    private void test(ReturnResult returnResult) {
+    private void test(ReturnResult<?> returnResult) {
         Assert.assertNotNull(returnResult);
         Assert.assertNotNull(returnResult.getFormattedJson());
         Assert.assertNotNull(returnResult.get());

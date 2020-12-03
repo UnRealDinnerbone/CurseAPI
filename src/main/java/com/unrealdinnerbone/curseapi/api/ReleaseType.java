@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
@@ -18,5 +19,9 @@ public enum ReleaseType {
 
     public static ReleaseType fromId(int id) {
         return Arrays.stream(TYPES).filter(type -> type.getId() == id).findFirst().orElse(null);
+    }
+
+    public Optional<ReleaseType> getLowerVersion() {
+        return Optional.ofNullable(fromId(this.id + 1));
     }
 }

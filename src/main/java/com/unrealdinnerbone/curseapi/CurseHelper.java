@@ -11,6 +11,7 @@ import com.unrealdinnerbone.curseapi.api.file.FileCurseFile;
 import com.unrealdinnerbone.curseapi.lib.JsonUtil;
 import com.unrealdinnerbone.curseapi.lib.ReturnResult;
 import com.unrealdinnerbone.unreallib.ArrayUtil;
+import com.unrealdinnerbone.unreallib.OptionalUtils;
 import com.unrealdinnerbone.unreallib.StringUtils;
 import com.unrealdinnerbone.unreallib.file.FileHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class CurseHelper {
 //            return map;
 //        }
 
-        public static ICurseFile getLatestFile(FingerprintMatch fingerprintMatch, String minecraftVersion, ReleaseType releaseType) {
+        public static ICurseFile getLatestFile(FingerprintMatch fingerprintMatch, String minecraftVersion, ReleaseType releaseType, boolean scanNext) {
             List<ICurseFile> curseFiles = filterFiles(fingerprintMatch.getLatestFiles(), minecraftVersion, releaseType);
             if(curseFiles.size() == 0) {
                 List<FileCurseFile> list = Arrays.asList(CurseAPI.getAddonFiles(fingerprintMatch.getId()).get());
@@ -45,7 +46,14 @@ public class CurseHelper {
             }
             if(curseFiles.size() == 0) {
                 log.error("There is not a better version {} mod with the release type {}", fingerprintMatch.getFile().getFileName(), releaseType.name());
-                return null;
+                if(scanNext) {
+                    return OptionalUtils.returnIfPresentOrElse(releaseType.getLowerVersion(), releaseType1 -> {
+                        log.info("Trying Version {}", releaseType1);
+                        return getLatestFile(fingerprintMatch, minecraftVersion, releaseType1, scanNext);
+                    }, () -> null);
+                }else {
+                    return null;
+                }
             }
             return ArrayUtil.getLastValue(curseFiles);
         }
