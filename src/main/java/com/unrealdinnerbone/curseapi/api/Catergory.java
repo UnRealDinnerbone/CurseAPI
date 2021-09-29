@@ -1,16 +1,6 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import lombok.Getter;
-
-@Getter
-public class Catergory
-{
-    private int id;
-    private String name;
-    private String slug;
-    private String avatarUrl;
-    private String dateModified;
-    private Integer parentGameCategoryId;
-    private Integer rootGameCategoryId;
-    private int gameId;
+public record Catergory(int id, String name, String slug, String avatarUrl,
+                        String dateModified, Integer parentGameCategoryId,
+                        Integer rootGameCategoryId, int gameId) {
 }

@@ -1,11 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.game;
 
-public class GameDetectionHintsItem{
+public record GameDetectionHintsItem(int id, int hintType, String hintPath, Object hintKey,
+									 int hintOptions, int gameId) {
 
-	private int id;
-	private int hintType;
-	private String hintPath;
-	private Object hintKey;
-	private int hintOptions;
-	private int gameId;
 }

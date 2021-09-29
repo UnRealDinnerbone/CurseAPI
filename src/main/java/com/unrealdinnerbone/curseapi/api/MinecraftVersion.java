@@ -1,18 +1,8 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import lombok.Getter;
+public record MinecraftVersion(int id, int gameVersionId, String versionString,
+							   String jarDownloadUrl, String jsonDownloadUrl, boolean approved,
+							   String dateModified, int gameVersionTypeId, int gameVersionStatus,
+							   int gameVersionTypeStatus) {
 
-@Getter
-public class MinecraftVersion{
-
-	private int id;
-	private int gameVersionId;
-	private String versionString;
-	private String jarDownloadUrl;
-	private String jsonDownloadUrl;
-	private boolean approved;
-	private String dateModified;
-	private int gameVersionTypeId;
-	private int gameVersionStatus;
-	private int gameVersionTypeStatus;
 }

@@ -1,13 +1,6 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import lombok.Getter;
+public record ModLoader(String name, String gameVersion, boolean latest, boolean recommended,
+						String dateModified) {
 
-@Getter
-public class ModLoader {
-
-	private String name;
-	private String gameVersion;
-	private boolean latest;
-	private boolean recommended;
-	private String dateModified;
 }

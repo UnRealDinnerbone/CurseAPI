@@ -1,10 +1,5 @@
 package com.unrealdinnerbone.curseapi.api.addon;
 
-public class GameVersionFile
-{
-    private String gameVersion;
-    private int projectFileId;
-    private String projectFileName;
-    private int fileType;
-    private String gameVersionFlavor;
+public record GameVersionFile(String gameVersion, int projectFileId, String projectFileName,
+                              int fileType, String gameVersionFlavor) {
 }

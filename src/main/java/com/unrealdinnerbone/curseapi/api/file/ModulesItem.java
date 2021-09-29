@@ -1,7 +1,5 @@
 package com.unrealdinnerbone.curseapi.api.file;
 
-public class ModulesItem {
+public record ModulesItem(String foldername, long fingerprint) {
 
-	private String foldername;
-	private long fingerprint;
 }

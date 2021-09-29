@@ -1,11 +1,10 @@
 package com.unrealdinnerbone.curseapi;
 
 import com.unrealdinnerbone.curseapi.lib.ReturnResult;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class JsonMatchTest
+public class JsonMatchTest extends BaseTest
 {
     @Test
     public void testAddon() {
@@ -52,29 +51,29 @@ public class JsonMatchTest
         test(CurseAPI.getCategoryListInfo(423));
     }
 
-    @Test
-    public void testGameListAddons() {
-        test(CurseAPI.getGameList(true));
-    }
-
-    @Test
-    public void testGameList() {
-        test(CurseAPI.getGameList(false));
-    }
+//    @Test
+//    public void testGameListAddons() {
+//        test(CurseAPI.getGameList(true));
+//    }
+//
+//    @Test
+//    public void testGameList() {
+//        test(CurseAPI.getGameList(false));
+//    }
 
     @Test
     public void testGetGameInfo() {
         test(CurseAPI.getGameInfo(432));
     }
 
-    private void test(ReturnResult<?> returnResult) {
-        Assert.assertNotNull(returnResult);
-        Assert.assertNotNull(returnResult.getFormattedJson());
-        Assert.assertNotNull(returnResult.get());
-        Assert.assertNotNull(returnResult.getReformtedJson());
-        Assert.assertNotNull(returnResult.getRawValue());
-        System.out.println(returnResult.getFormattedJson());
-        Assert.assertEquals(returnResult.getFormattedJson(), returnResult.getReformtedJson());
-    }
+//    private void test(ReturnResult<?> returnResult) {
+//        Assert.assertNotNull(returnResult);
+//        Assert.assertNotNull(returnResult.getFormattedJson());
+//        Assert.assertNotNull(returnResult.get());
+//        Assert.assertNotNull(returnResult.getReformtedJson());
+//        Assert.assertNotNull(returnResult.getRawValue());
+//        System.out.println(returnResult.getFormattedJson());
+//        Assert.assertEquals(returnResult.getFormattedJson(), returnResult.getReformtedJson());
+//    }
 
 }

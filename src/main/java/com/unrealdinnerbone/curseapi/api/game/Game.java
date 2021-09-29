@@ -2,28 +2,15 @@ package com.unrealdinnerbone.curseapi.api.game;
 
 import java.util.List;
 
-public class Game {
+public record Game(int id, String name, String slug, String dateModified,
+				   List<GameFilesItem> gameFiles,
+				   List<GameDetectionHintsItem> gameDetectionHints,
+				   List<FileParsingRule> fileParsingRules,
+				   List<CategorySectionsItem> categorySections,
+				   int maxFreeStorage, int maxPremiumStorage, int maxFileSize,
+				   Object addonSettingsFolderFilter, Object addonSettingsStartingFolder,
+				   Object addonSettingsFileFilter, Object addonSettingsFileRemovalFilter,
+				   boolean supportsAddons, boolean supportsPartnerAddons, int supportedClientConfiguration,
+				   boolean supportsNotifications, int profilerAddonId, int twitchGameId, int clientGameSettingsId) {
 
-	private int id;
-	private String name;
-	private String slug;
-	private String dateModified;
-	private List<GameFilesItem> gameFiles;
-	private List<GameDetectionHintsItem> gameDetectionHints;
-	private List<FileParsingRule> fileParsingRules;
-	private List<CategorySectionsItem> categorySections;
-	private int maxFreeStorage;
-	private int maxPremiumStorage;
-	private int maxFileSize;
-	private Object addonSettingsFolderFilter;
-	private Object addonSettingsStartingFolder;
-	private Object addonSettingsFileFilter;
-	private Object addonSettingsFileRemovalFilter;
-	private boolean supportsAddons;
-	private boolean supportsPartnerAddons;
-	private int supportedClientConfiguration;
-	private boolean supportsNotifications;
-	private int profilerAddonId;
-	private int twitchGameId;
-	private int clientGameSettingsId;
 }

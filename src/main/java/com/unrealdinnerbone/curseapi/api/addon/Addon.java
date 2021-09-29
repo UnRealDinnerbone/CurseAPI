@@ -1,40 +1,20 @@
 package com.unrealdinnerbone.curseapi.api.addon;
 
-
-import lombok.Getter;
-
 import java.math.BigDecimal;
 import java.util.List;
 
-@Getter
-public class Addon
-{
-    private int id;
-    private String name;
-    private List<Author> authors;
-    private List<Attachment> attachments;
-    private String websiteUrl;
-    private int gameId;
-    private String summary;
-    private int defaultFileId;
-    private BigDecimal downloadCount;
-    private List<AddonCurseFile> latestFiles;
-    private List<AddonCategory> categories;
-    private int status;
-    private int primaryCategoryId;
-    private CategorySection categorySection;
-    private String slug;
-    List<GameVersionFile> gameVersionLatestFiles;
-    private boolean isFeatured;
-    private double popularityScore;
-    private int gamePopularityRank;
-    private String primaryLanguage;
-    private String gameSlug;
-    private String gameName;
-    private String portalName;
-    private String dateModified;
-    private String dateCreated;
-    private String dateReleased;
-    private boolean isAvailable;
-    private boolean isExperiemental;
+public record Addon(int id, String name,
+                    List<Author> authors,
+                    List<Attachment> attachments,
+                    String websiteUrl, int gameId, String summary, int defaultFileId,
+                    long downloadCount,
+                    List<AddonCurseFile> latestFiles,
+                    List<AddonCategory> categories, int status,
+                    int primaryCategoryId, CategorySection categorySection,
+                    String slug,
+                    List<GameVersionFile> gameVersionLatestFiles,
+                    boolean isFeatured, double popularityScore, int gamePopularityRank,
+                    String primaryLanguage, String gameSlug, String gameName,
+                    String portalName, String dateModified, String dateCreated,
+                    String dateReleased, boolean isAvailable, boolean isExperiemental) {
 }

@@ -1,12 +1,7 @@
 package com.unrealdinnerbone.curseapi.api.game;
 
 
-public class GameFilesItem{
+public record GameFilesItem(int id, int gameId, boolean isRequired, String fileName, int fileType,
+							int platformType) {
 
-	private int id;
-	private int gameId;
-	private boolean isRequired;
-	private String fileName;
-	private int fileType;
-	private int platformType;
 }

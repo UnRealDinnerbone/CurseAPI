@@ -1,18 +1,14 @@
 package com.unrealdinnerbone.curseapi.api;
 
-import lombok.Getter;
-
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Getter
-public class FingerprintResult
-{
-    private boolean isCacheBuilt;
-    private List<FingerprintMatch> exactMatches;
-    private List<Long> exactFingerprints;
-    private List<Long> partialMatches;
-    public HashMap<Integer,Long> partialMatchFingerprints;
-    private List<Long> installedFingerprints;
-    private List<Long> unmatchedFingerprints;
+public record FingerprintResult(boolean isCacheBuilt,
+                                List<FingerprintMatch> exactMatches,
+                                List<Long> exactFingerprints,
+                                List<Long> partialMatches,
+                                Map<Integer, Long> partialMatchFingerprints,
+                                List<Long> installedFingerprints,
+                                List<Long> unmatchedFingerprints) {
 }

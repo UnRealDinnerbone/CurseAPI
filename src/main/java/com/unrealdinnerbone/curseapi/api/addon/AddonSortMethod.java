@@ -1,7 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.addon;
 
-public enum AddonSortMethod
-{
+public enum AddonSortMethod {
     Featured,
     Popularity,
     LastUpdated,

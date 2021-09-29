@@ -6,23 +6,23 @@ import java.util.List;
 
 public interface ICurseFile 
 {
-    int getId();
-    String getDisplayName();
-    String getFileName();
-    String getFileDate();
-    int getFileLength();
-    int getReleaseType();
-    int getFileStatus();
-    String getDownloadUrl();
+    int id();
+    String displayName();
+    String fileName();
+    String fileDate();
+    int fileLength();
+    int releaseType();
+    int fileStatus();
+    String downloadUrl();
     boolean isAlternate();
-    int getAlternateFileId();
-    List<Dependency> getDependencies();
+    int alternateFileId();
+    List<Dependency> dependencies();
     boolean isAvailable();
-    long getPackageFingerprint();
-    List<String> getGameVersion();
-    Object getInstallMetadata();
-    Object getServerPackFileId();
-    boolean isHasInstallScript();
-    String getGameVersionDateReleased();
-    Object getGameVersionFlavor();
+    long packageFingerprint();
+    List<String> gameVersion();
+    Object installMetadata();
+    Object serverPackFileId();
+    boolean hasInstallScript();
+    String gameVersionDateReleased();
+    Object gameVersionFlavor();
 }

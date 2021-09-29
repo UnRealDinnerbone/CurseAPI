@@ -1,15 +1,20 @@
 package com.unrealdinnerbone.curseapi;
 
-import com.unrealdinnerbone.unreallib.time.TimeUtil;
+import com.unrealdinnerbone.curseapi.lib.ReturnResult;
 import com.unrealdinnerbone.unreallib.web.HttpUtils;
-import lombok.extern.slf4j.Slf4j;
 
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-@Slf4j
 public class CurseAPIUtils
 {
     private static final DateFormat[] curseDateFormats;
@@ -20,23 +25,63 @@ public class CurseAPIUtils
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")};
     }
 
-    public static String get(String dataURL)  {
-        String url = getURL(dataURL);
-        log.debug("Sending \"get\" to " + url);
-        return HttpUtils.get(url);
-    }
-
-    public static String post(String dataURL, Object dataMap) {
-        return HttpUtils.post(getURL(dataURL), dataMap, null);
+    public static String post(String dataURL, String dataMap) {
+        try {
+            return postIt(getURL(dataURL), dataMap).body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static String getURL(String dataURL) {
         return "https://addons-ecs.forgesvc.net/api/v2/" + dataURL;
     }
 
-    public synchronized static long formatTime(String time) {
+
+    private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
+
+    public static HttpResponse<String> postIt(String url, String map) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofString(map))
+                .uri(URI.create(url))
+                .setHeader("User-Agent", "Java") // add request header
+                .header("Content-Type", "application/json")
+                .build();
+        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public static <T> ReturnResult<T> get(Class<T> tClass, String urlData) {
+        String theUrlData = null;
+        try {
+            theUrlData = HttpUtils.get(getURL(urlData)).body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return theUrlData != null ? new ReturnResult<>(theUrlData, tClass) : null;
+    }
+
+    public static String encode(String toencode) {
+        try {
+            return URLEncoder.encode(toencode, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static long formatTime(String time) {
         String fixedTime = time.replace("T", " ").replace("Z", "");
-        return TimeUtil.formatTime(fixedTime, curseDateFormats);
+        for (DateFormat curseDateFormat : curseDateFormats) {
+            try {
+                return curseDateFormat.parse(time).getTime();
+            }catch (Exception e) {
+
+            }
+        }
+        System.out.println("CAke");
+        return 0;
     }
 
 }

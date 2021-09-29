@@ -1,9 +1,5 @@
 package com.unrealdinnerbone.curseapi.api.addon;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
 public class Dependency
 {
     private String id;
@@ -12,8 +8,6 @@ public class Dependency
 
 
     @SuppressWarnings("UnnecessaryEnumModifier")
-    @AllArgsConstructor
-    @Getter
     public static enum Type
     {
         EMBEDDED_LIBRARY(1),
@@ -23,8 +17,13 @@ public class Dependency
         INCOMPATIBLE(5),
         INCLUDE(6);
 
-        private int id;
+        private final int id;
+        private Type(int id) {
+            this.id = id;
+        }
 
-
+        public int getId() {
+            return id;
+        }
     }
 }
