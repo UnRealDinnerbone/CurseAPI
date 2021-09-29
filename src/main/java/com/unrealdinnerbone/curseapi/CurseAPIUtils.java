@@ -75,12 +75,11 @@ public class CurseAPIUtils
         String fixedTime = time.replace("T", " ").replace("Z", "");
         for (DateFormat curseDateFormat : curseDateFormats) {
             try {
-                return curseDateFormat.parse(time).getTime();
+                return curseDateFormat.parse(fixedTime).getTime();
             }catch (Exception e) {
 
             }
         }
-        System.out.println("CAke");
         return 0;
     }
 
