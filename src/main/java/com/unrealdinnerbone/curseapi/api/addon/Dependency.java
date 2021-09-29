@@ -4,7 +4,7 @@ public class Dependency
 {
     private String id;
     private String addonId;
-    private Type type;
+//    private Type type;
 
 
     @SuppressWarnings("UnnecessaryEnumModifier")
