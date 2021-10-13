@@ -2,6 +2,7 @@ package com.unrealdinnerbone.curseapi;
 
 import com.squareup.moshi.JsonDataException;
 import com.unrealdinnerbone.curseapi.lib.ReturnResult;
+import com.unrealdinnerbone.curseapi.lib.json.JsonUtil;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public abstract class BaseTest {
 
     private Map<String, ?> getFor(String s) {
         try {
-            Map<String, ?> map = ReturnResult.MOSHI.adapter(Map.class).failOnUnknown().fromJson(s);
+            Map<String, ?> map = JsonUtil.MOSHI.adapter(Map.class).failOnUnknown().fromJson(s);
             return map;
         }catch (JsonDataException | IOException e) {
             e.printStackTrace();
@@ -44,14 +45,14 @@ public abstract class BaseTest {
     }
 
     public String aFormat(ReturnResult<?> returnResult) {
-        return ReturnResult.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getA(returnResult));
+        return JsonUtil.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getA(returnResult));
     }
     public String bFormat(ReturnResult<?> returnResult) {
-        return ReturnResult.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getB(returnResult));
+        return JsonUtil.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getB(returnResult));
     }
 
     public <T> String getReformtedJson(ReturnResult<T> returnResult) {
-        return ReturnResult.MOSHI.adapter(returnResult.getClazz()).indent("    ").toJson(returnResult.get());
+        return JsonUtil.MOSHI.adapter(returnResult.getClazz()).indent("    ").toJson(returnResult.get());
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CurseAPITest extends BaseTest
 {
-    public static final CurseAPI CURSE_API = new CurseAPI(System.getenv("TEST_API_KEY"));
+    public static final CurseAPI CURSE_API = new CurseAPI(System.getenv().getOrDefault("TEST_API_KEY", "FIX_ME"));
 
     @Test
     public void getGames() throws ExecutionException, InterruptedException {
