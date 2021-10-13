@@ -90,8 +90,8 @@ public final class CurseAPI {
             return getV1(Responses.String.class, "mods/" + modId + "/files/" + fileId +"/changelog");
         }
 
-        public CompletableFuture<ReturnResult<Responses.String>> getFileDownloadURl(int modId, int fileId) {
-            return getV1(Responses.String.class, "mods/" + modId + "/files/" + fileId+ "/download-url");
+        public CompletableFuture<ReturnResult<Responses.DownloadURL>> getFileDownloadURl(int modId, int fileId) {
+            return getV1(Responses.DownloadURL.class, "mods/" + modId + "/files/" + fileId+ "/download-url");
         }
 
 

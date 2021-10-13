@@ -32,10 +32,13 @@ public class EnumTest
 
     @Test
     public void test() throws IOException {
-        Assert.assertEquals(Tnum.ONE, MOSHI.adapter(TestClass.class).fromJson("{\"tnum\": 1}").tnum);
+        TestClass testClass = MOSHI.adapter(TestClass.class).fromJson("{\"tnum\": 1,\"two\": 2}");
+        Assert.assertEquals(Tnum.ONE, testClass.tnum);
+        Assert.assertEquals(Tnum.TWO, testClass.two);
     }
 
     public static class TestClass {
         private Tnum tnum;
+        private Tnum two;
     }
 }

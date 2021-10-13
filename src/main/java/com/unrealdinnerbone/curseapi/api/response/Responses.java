@@ -9,6 +9,9 @@ import com.unrealdinnerbone.curseapi.api.game.GameVersionsByType;
 import com.unrealdinnerbone.curseapi.api.file.FeaturedModsResponse;
 import com.unrealdinnerbone.curseapi.api.file.File;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class Responses
@@ -28,6 +31,13 @@ public class Responses
     public record Versions(List<GameVersionsByType> data) {}
     public record SearchMods(List<com.unrealdinnerbone.curseapi.api.mod.Mod> data, Pagination pagination) {}
     public record String(java.lang.String data) {}
+    public record DownloadURL(java.lang.String data) {
+
+        public java.lang.String getFormattedURL() throws UnsupportedEncodingException {
+            return URLEncoder.encode(data, StandardCharsets.UTF_8.name());
+        }
+    }
+
 
 
 }

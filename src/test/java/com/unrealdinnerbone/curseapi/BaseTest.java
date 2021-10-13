@@ -1,6 +1,5 @@
 package com.unrealdinnerbone.curseapi;
 
-import com.squareup.moshi.JsonDataException;
 import com.unrealdinnerbone.curseapi.lib.ReturnResult;
 import com.unrealdinnerbone.curseapi.lib.json.JsonUtil;
 import org.junit.Assert;
@@ -12,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 public abstract class BaseTest {
 
-    protected <T> void test(CompletableFuture<ReturnResult<T>> completableFuture) throws ExecutionException, InterruptedException {
+    protected <T> void test(CompletableFuture<ReturnResult<T>> completableFuture) throws ExecutionException, InterruptedException, IOException {
 
         ReturnResult<?> returnResult = completableFuture.get();
 
@@ -21,33 +20,25 @@ public abstract class BaseTest {
         Assert.assertNotNull(returnResult.get());
         Assert.assertNotNull(getReformtedJson(returnResult));
         Assert.assertNotNull(returnResult.getRawValue());
-
-//        Assert.assertArrayEquals(getA(returnResult).keySet().stream().sorted().toArray(), getB(returnResult).keySet().stream().sorted().toArray());
         Assert.assertEquals(aFormat(returnResult), bFormat(returnResult));
     }
 
-    public Map<String, ?> getA(ReturnResult<?> returnResult) {
+    public Map<String, ?> getA(ReturnResult<?> returnResult) throws IOException {
         return getFor(returnResult.getRawValue());
     }
 
-    public Map<String, ?> getB(ReturnResult<?> returnResult) {
+    public Map<String, ?> getB(ReturnResult<?> returnResult) throws IOException {
         return getFor(getReformtedJson(returnResult));
     }
 
-    private Map<String, ?> getFor(String s) {
-        try {
-            Map<String, ?> map = JsonUtil.MOSHI.adapter(Map.class).failOnUnknown().fromJson(s);
-            return map;
-        }catch (JsonDataException | IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private Map<String, ?> getFor(String s) throws IOException {
+        return JsonUtil.MOSHI.adapter(Map.class).failOnUnknown().fromJson(s);
     }
 
-    public String aFormat(ReturnResult<?> returnResult) {
+    public String aFormat(ReturnResult<?> returnResult) throws IOException {
         return JsonUtil.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getA(returnResult));
     }
-    public String bFormat(ReturnResult<?> returnResult) {
+    public String bFormat(ReturnResult<?> returnResult) throws IOException {
         return JsonUtil.MOSHI.adapter(Object.class).indent("    ").lenient().toJson(getB(returnResult));
     }
 
