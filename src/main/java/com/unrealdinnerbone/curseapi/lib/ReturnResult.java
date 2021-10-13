@@ -1,21 +1,13 @@
 package com.unrealdinnerbone.curseapi.lib;
 
+import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonDataException;
-import com.squareup.moshi.Moshi;
-import com.unrealdinnerbone.unreallib.json.IJsonParser;
-import com.unrealdinnerbone.unreallib.json.JsonUtil;
-import dev.zacsweers.moshix.records.RecordsJsonAdapterFactory;
+import com.unrealdinnerbone.curseapi.lib.json.JsonUtil;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class ReturnResult<T> {
-
-    public static final Moshi MOSHI = new Moshi.Builder().add(new RecordsJsonAdapterFactory()).build();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReturnResult.class);
 
     private final String value;
     private final Class<T> tClass;
@@ -34,12 +26,18 @@ public class ReturnResult<T> {
     public T get() {
         if (t == null) {
             try {
-                t = parse(value, tClass);
-            } catch (IOException | AssertionError e) {
-                e.printStackTrace();
-                LOGGER.error("Error parsing json data", e);
+                t = getExceptionally();
+            } catch (JsonDataException | IOException e) {
                 return null;
             }
+        }
+        return t;
+    }
+
+
+    public T getExceptionally() throws JsonDataException, IOException {
+        if (t == null) {
+            t = parse(value, tClass);
         }
         return t;
     }
@@ -49,7 +47,8 @@ public class ReturnResult<T> {
     }
 
     public static <T> T parse(String string, Class<T> tClass) throws JsonDataException, IOException {
-        return MOSHI.adapter(tClass).fromJson(string);
+        return JsonUtil.MOSHI.adapter(tClass).fromJson(string);
     }
+
 
 }

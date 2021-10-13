@@ -6,10 +6,15 @@ import org.junit.Assert;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public abstract class BaseTest {
 
-    protected void test(ReturnResult<?> returnResult) {
+    protected <T> void test(CompletableFuture<ReturnResult<T>> completableFuture) throws ExecutionException, InterruptedException {
+
+        ReturnResult<?> returnResult = completableFuture.get();
+
         Assert.assertNotNull(returnResult);
         Assert.assertNotNull(returnResult.getRawValue());
         Assert.assertNotNull(returnResult.get());

@@ -8,10 +8,10 @@ buildscript {
 plugins {
     id "maven-publish"
     id 'java'
+    id 'java-library'
 }
 
 group 'com.unrealdinnerbone'
-version "1.0.0"
 
 def ENV = System.getenv()
 def buildNumber = ENV.GITHUB_RUN_NUMBER ? "${ENV.GITHUB_RUN_NUMBER}" : "0"
@@ -21,31 +21,16 @@ archivesBaseName = "CurseAPI"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "The Name"
-        url = "https://jitpack.io"
-    }
-    maven {
-        url = "https://maven.unreal.codes/repository/unreal/"
-        name = "UnReal Maven"
-    }
-    maven { url "https://oss.jfrog.org/artifactory/libs-release"}
+    maven { url "https://maven.unreal.codes/repository/unreal/" }
 }
 
 dependencies {
-    implementation('com.unrealdinnerbone:UnRealLib:3.1.0+build.61')
-    testCompileOnly group: 'junit', name: 'junit', version: '4.4'
     implementation "com.squareup.moshi:moshi:1.12.0"
-    implementation "dev.zacsweers.moshix:moshi-records-reflect:0.14.0"
-
+    implementation 'dev.zacsweers.moshix:moshi-records-reflect:0.14.1'
+    testCompileOnly group: 'junit', name: 'junit', version: '4.4'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(16)
-    }
-}
-
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 publishing {
     publications {
@@ -62,7 +47,6 @@ publishing {
                 username ENV.MAVEN_USERNAME
                 password ENV.MAVEN_PASSWORD
             }
-
         }
     }
 }
