@@ -38,6 +38,7 @@ public class CurseAPIUtils
     }
 
     public static <T> CompletableFuture<ReturnResult<T>> handle(HttpRequest request, Class<T> tClass, String url) {
+
         CompletableFuture<ReturnResult<T>> future = new CompletableFuture<>();
 
         CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())

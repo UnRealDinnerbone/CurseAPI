@@ -1,5 +1,6 @@
 package com.unrealdinnerbone.curseapi.lib;
 
+import com.unrealdinnerbone.curseapi.api.SortOrder;
 import com.unrealdinnerbone.curseapi.api.mod.ModLoaderType;
 import com.unrealdinnerbone.curseapi.api.mod.ModsSearchSortField;
 
@@ -75,8 +76,8 @@ public record Query(String query) {
         }
 
 
-        public Mod sortOrder(boolean classId) {
-            builder.withQuery("sortOrder", String.valueOf(classId));
+        public Mod sortOrder(SortOrder sortOrder) {
+            builder.withQuery("sortOrder", sortOrder.name().toLowerCase());
             return this;
         }
 

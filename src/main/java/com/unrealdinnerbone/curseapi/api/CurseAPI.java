@@ -77,6 +77,7 @@ public final class CurseAPI {
             return getV1(Responses.ModFile.class, "mods/" + modId +"/files/" + fileId);
         }
 
+        //Todo https://docs.curseforge.com/#get-mod-file
         public CompletableFuture<ReturnResult<Responses.ModFiles>> getFiles(int modId) {
             return getV1(Responses.ModFiles.class, "mods/" + modId + "/files");
         }

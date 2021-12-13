@@ -12,7 +12,8 @@ import com.unrealdinnerbone.curseapi.api.mod.ModStatus;
 import dev.zacsweers.moshix.records.RecordsJsonAdapterFactory;
 
 public class JsonUtil {
-    public static final Moshi MOSHI = new Moshi.Builder().add(new RecordsJsonAdapterFactory())
+    public static final Moshi MOSHI = new Moshi.Builder()
+            .add(new RecordsJsonAdapterFactory())
             .add(FileReleaseType.class, EnumJsonAdapter.create(FileReleaseType.class))
             .add(FileStatus.class, EnumJsonAdapter.create(FileStatus.class))
             .add(HashAlgo.class, EnumJsonAdapter.create(HashAlgo.class))
