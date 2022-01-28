@@ -1,14 +1,18 @@
 package com.unrealdinnerbone.curseapi;
 
 import com.unrealdinnerbone.curseapi.api.CurseAPI;
+import com.unrealdinnerbone.curseapi.api.SortOrder;
 import com.unrealdinnerbone.curseapi.api.body.FeaturedModsRequestBody;
 import com.unrealdinnerbone.curseapi.api.body.ModFilesRequestBody;
 import com.unrealdinnerbone.curseapi.api.body.ModsByIdsListRequestBody;
 import com.unrealdinnerbone.curseapi.api.game.GameVersionType;
 import com.unrealdinnerbone.curseapi.api.game.GameVersionsByType;
+import com.unrealdinnerbone.curseapi.api.mod.Mod;
+import com.unrealdinnerbone.curseapi.api.mod.ModsSearchSortField;
 import com.unrealdinnerbone.curseapi.api.response.Responses;
 import com.unrealdinnerbone.curseapi.lib.EnvUtil;
 import com.unrealdinnerbone.curseapi.lib.Query;
+import com.unrealdinnerbone.curseapi.lib.json.JsonUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CurseAPITest extends BaseTest
 {
@@ -116,6 +123,55 @@ public class CurseAPITest extends BaseTest
     @Test
     public void getFileDownloadURl() throws ExecutionException, InterruptedException, IOException {
         test(CURSE_API.v1().getFileDownloadURl(297028, 3432688));
+    }
+
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+//    @Test
+    public void blockTest() throws ExecutionException, InterruptedException, IOException {
+        for(GameVersionType datum : CURSE_API.v1().getVersionTypes(MINECRAFT_ID).get().get().data()) {
+            try {
+                findBlockedMods(0, datum.id());
+            }catch(Exception e) {
+                LOGGER.error("Error while testing {}", datum.id(), e);
+            }
+            LOGGER.info("Total Mods Found: {}", atomicInteger.get());
+        }
+
+//        Data data = JsonUtil.MOSHI.adapter(Data.class).fromJson(Files.readString(Path.of("thing.json")));
+//        for(Data.File file : data.files()) {
+//            Mod mod = CURSE_API.v1().getMod(file.projectID).get().getExceptionally().data();
+//            if(mod.allowModDistribution() != null && !mod.allowModDistribution()) {
+//                LOGGER.info("{} {}", mod.name(), false);
+//
+//            }
+//        }
+    }
+
+
+    List<String> foundMods = new ArrayList<>();
+    private void findBlockedMods(int offset, int gameVersion) throws ExecutionException, InterruptedException, IOException {
+
+        List<Mod> mods = CURSE_API.v1().searchMods(new Query.Mod().gameId(MINECRAFT_ID).index(offset).gameVersionTypeId(gameVersion)).get().get().data();
+        for(Mod mod : mods) {
+            if(!foundMods.contains(mod.name())) {
+                atomicInteger.incrementAndGet();
+                if(mod.allowModDistribution() != null && !mod.allowModDistribution()) {
+                    LOGGER.info("Found Blocked Mod: {}", mod.name());
+                    Files.writeString(Path.of("blocked.txt"), mod.name() + "\n", StandardOpenOption.APPEND);
+                }
+                foundMods.add(mod.name());
+            }
+
+        }
+        if(mods.size() != 100){
+            findBlockedMods(offset + 1000, gameVersion);
+        }
+    }
+
+
+    public record Data(File[] files) {
+        public record File(int projectID, int fileID) {}
     }
 
 }

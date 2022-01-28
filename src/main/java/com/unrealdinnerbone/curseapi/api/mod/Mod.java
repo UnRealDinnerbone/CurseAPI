@@ -24,5 +24,6 @@ public record Mod(int id,
                   List<FileIndex> latestFilesIndexes,
                   String dateCreated,
                   String dateModified,
-                  String dateReleased) {
+                  String dateReleased,
+                  Boolean allowModDistribution) {
 }
