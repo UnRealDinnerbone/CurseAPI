@@ -14,14 +14,14 @@ import dev.zacsweers.moshix.records.RecordsJsonAdapterFactory;
 public class JsonUtil {
     public static final Moshi MOSHI = new Moshi.Builder()
             .add(new RecordsJsonAdapterFactory())
-            .add(FileReleaseType.class, EnumJsonAdapter.create(FileReleaseType.class))
-            .add(FileStatus.class, EnumJsonAdapter.create(FileStatus.class))
-            .add(HashAlgo.class, EnumJsonAdapter.create(HashAlgo.class))
-            .add(FileRelation.class, EnumJsonAdapter.create(FileRelation.class))
-            .add(CoreStatus.class, EnumJsonAdapter.create(CoreStatus.class))
-            .add(CoreApiStatus.class, EnumJsonAdapter.create(CoreApiStatus.class))
-            .add(ModStatus.class, EnumJsonAdapter.create(ModStatus.class))
-            .add(ModLoaderType.class, EnumJsonAdapter.create(ModLoaderType.class))
+            .add(FileReleaseType.class, EnumJsonAdapter.create(FileReleaseType.class, FileReleaseType.UNKNOWN))
+            .add(FileStatus.class, EnumJsonAdapter.create(FileStatus.class, FileStatus.UNKNOWN))
+            .add(HashAlgo.class, EnumJsonAdapter.create(HashAlgo.class, HashAlgo.UNKNOWN))
+            .add(FileRelation.class, EnumJsonAdapter.create(FileRelation.class, FileRelation.UNKNOWN))
+            .add(CoreStatus.class, EnumJsonAdapter.create(CoreStatus.class, CoreStatus.UNKNOWN))
+            .add(CoreApiStatus.class, EnumJsonAdapter.create(CoreApiStatus.class, CoreApiStatus.UNKNOWN))
+            .add(ModStatus.class, EnumJsonAdapter.create(ModStatus.class, ModStatus.UNKNOWN))
+            .add(ModLoaderType.class, EnumJsonAdapter.create(ModLoaderType.class, ModLoaderType.UNKNOWN))
             .add(new OptionalFactory())
             .build();
 }

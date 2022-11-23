@@ -38,9 +38,16 @@ public class CurseAPITest extends BaseTest
     public static final int MINECRAFT_ID = EnvUtil.getInt("MINECRAFT_ID", 432);
     public static final String MINECRAFT_NAME = EnvUtil.getString("MINECRAFT_NAME", "Minecraft");
 
-    @Before
-    public void setUp() {
-        Assert.assertNotEquals("API Key is not set", "", System.getenv().getOrDefault("TEST_API_KEY", ""));
+//    @Before
+//    public void setUp() {
+//        Assert.assertNotEquals("API Key is not set", "", System.getenv().getOrDefault("TEST_API_KEY", ""));
+//    }
+
+    @Test
+    public void cake() throws ExecutionException, InterruptedException {
+        for (Mod gaz : CURSE_API.v1().searchMods(Query.Mod.builder().searchFilter("bLog")).get().get().data()) {
+            LOGGER.info("{}", gaz);
+        }
     }
 
     @Test
@@ -64,12 +71,12 @@ public class CurseAPITest extends BaseTest
 
     @Test
     public void getCategories() throws ExecutionException, InterruptedException, IOException {
-        test(CURSE_API.v1().getCategories( new Query.Category().setGameId(MINECRAFT_ID)));
+        test(CURSE_API.v1().getCategories(Query.Category.builder().setGameId(MINECRAFT_ID)));
     }
 
     @Test
     public void searchMods() throws ExecutionException, InterruptedException, IOException {
-        test(CURSE_API.v1().searchMods(new Query.Mod().gameId(MINECRAFT_ID)));
+        test(CURSE_API.v1().searchMods(Query.Mod.builder().gameId(MINECRAFT_ID)));
     }
 
 
@@ -81,7 +88,7 @@ public class CurseAPITest extends BaseTest
 
     @Test
     public void getMod() throws ExecutionException, InterruptedException, IOException {
-        test(CURSE_API.v1().getMod(297028));
+        test(CURSE_API.v1().getMod(230556));
     }
 
     @Test
@@ -122,14 +129,15 @@ public class CurseAPITest extends BaseTest
 
     @Test
     public void getFileDownloadURl() throws ExecutionException, InterruptedException, IOException {
-        test(CURSE_API.v1().getFileDownloadURl(297028, 3432688));
+        test(CURSE_API.v1().getModFileDownloadURl(230556, 3684260));
     }
 
     private final AtomicInteger atomicInteger = new AtomicInteger(0);
 
-//    @Test
+    @Test
     public void blockTest() throws ExecutionException, InterruptedException, IOException {
-        for(GameVersionType datum : CURSE_API.v1().getVersionTypes(MINECRAFT_ID).get().get().data()) {
+        List<GameVersionType> type = CURSE_API.v1().getVersionTypes(MINECRAFT_ID).get().get().data();
+        for(GameVersionType datum : type) {
             try {
                 findBlockedMods(0, datum.id());
             }catch(Exception e) {
@@ -152,20 +160,30 @@ public class CurseAPITest extends BaseTest
     List<String> foundMods = new ArrayList<>();
     private void findBlockedMods(int offset, int gameVersion) throws ExecutionException, InterruptedException, IOException {
 
-        List<Mod> mods = CURSE_API.v1().searchMods(new Query.Mod().gameId(MINECRAFT_ID).index(offset).gameVersionTypeId(gameVersion)).get().get().data();
+        List<Mod> mods = CURSE_API.v1().searchMods(Query.Mod.builder().gameId(MINECRAFT_ID).index(offset).gameVersionTypeId(gameVersion).pageSize(50)).get().get().data();
         for(Mod mod : mods) {
-            if(!foundMods.contains(mod.name())) {
+            if(!foundMods.contains(mod.slug())) {
                 atomicInteger.incrementAndGet();
-                if(mod.allowModDistribution() != null && !mod.allowModDistribution()) {
+                if(mod.allowModDistribution() == null || !mod.allowModDistribution()) {
                     LOGGER.info("Found Blocked Mod: {}", mod.name());
-                    Files.writeString(Path.of("blocked.txt"), mod.name() + "\n", StandardOpenOption.APPEND);
+                    if(!Files.exists(Path.of("blocked.txt"))) {
+                        Files.createFile(Path.of("blocked.txt"));
+                    }
+                    String type = mod.allowModDistribution() == null ? "Unchanged" : "Blocked";
+                    Files.writeString(Path.of("blocked.txt"),  String.format("%09d", (int) mod.downloadCount()) + " - " + type + " - " + mod.name() + "\n", StandardOpenOption.APPEND);
                 }
-                foundMods.add(mod.name());
+                foundMods.add(mod.slug());
             }
 
         }
-        if(mods.size() != 100){
-            findBlockedMods(offset + 1000, gameVersion);
+        if(mods.size() == 50) {
+            if(offset + 50 < 10000) {
+                findBlockedMods(offset + 50, gameVersion);
+            }else {
+                LOGGER.warn("Offset: {}", offset);
+            }
+        }else {
+            LOGGER.warn("Found {} mods", mods.size());
         }
     }
 

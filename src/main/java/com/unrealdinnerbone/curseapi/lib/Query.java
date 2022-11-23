@@ -38,7 +38,11 @@ public record Query(String query) {
 
         private final Query.Builder builder;
 
-        public Mod() {
+        public static Mod builder() {
+            return new Mod();
+        }
+
+        private Mod() {
             this.builder = new Query.Builder();
         }
 
@@ -123,7 +127,11 @@ public record Query(String query) {
 
         private final Query.Builder builder;
 
-        public Category() {
+        public static Category builder() {
+            return new Category();
+        }
+
+        private Category() {
             this.builder = new Query.Builder();
         }
 

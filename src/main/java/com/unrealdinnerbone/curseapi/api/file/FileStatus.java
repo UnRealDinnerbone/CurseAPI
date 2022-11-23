@@ -18,7 +18,9 @@ public enum FileStatus implements IID
     DEPRECATED(12),
     BAKING(13),
     AWAITING_PUBLISHING(14),
-    FAILED_PUBLISHING(15);
+    FAILED_PUBLISHING(15),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 

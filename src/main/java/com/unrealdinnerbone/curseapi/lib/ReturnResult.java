@@ -1,9 +1,9 @@
 package com.unrealdinnerbone.curseapi.lib;
 
-import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonDataException;
 import com.unrealdinnerbone.curseapi.lib.json.JsonUtil;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -28,6 +28,7 @@ public class ReturnResult<T> {
             try {
                 t = getExceptionally();
             } catch (JsonDataException | IOException e) {
+                LoggerFactory.getLogger(ReturnResult.class).error("Failed to parse json", e);
                 return null;
             }
         }
@@ -48,6 +49,15 @@ public class ReturnResult<T> {
 
     public static <T> T parse(String string, Class<T> tClass) throws JsonDataException, IOException {
         return JsonUtil.MOSHI.adapter(tClass).fromJson(string);
+    }
+
+    public static <T> ReturnResult<T> createException(Throwable throwable) {
+        return new ReturnResult<>(null, null) {
+            @Override
+            public T getExceptionally() {
+                throw new RuntimeException(throwable);
+            }
+        };
     }
 
 

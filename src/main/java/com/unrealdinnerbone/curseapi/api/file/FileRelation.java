@@ -9,7 +9,9 @@ public enum FileRelation implements IID
     REQUIRED(3),
     TOOL(4),
     INCOMPATIBLE(5),
-    INCLUDE(6);
+    INCLUDE(6),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 

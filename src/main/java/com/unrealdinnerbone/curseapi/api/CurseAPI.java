@@ -2,6 +2,7 @@ package com.unrealdinnerbone.curseapi.api;
 
 import com.unrealdinnerbone.curseapi.CurseAPIUtils;
 import com.unrealdinnerbone.curseapi.api.body.*;
+import com.unrealdinnerbone.curseapi.api.minecraft.MinecraftGameVersion;
 import com.unrealdinnerbone.curseapi.api.response.Responses;
 import com.unrealdinnerbone.curseapi.lib.Query;
 import com.unrealdinnerbone.curseapi.lib.ReturnResult;
@@ -25,6 +26,8 @@ public final class CurseAPI {
 
     public class V1 {
 
+//        private static final String KEY = System.getenv().getOrDefault("V1_KEY", "v1/");
+        private static final String KEY = System.getenv().getOrDefault("V1_KEY", "");
         //Games
         public CompletableFuture<ReturnResult<Responses.Games>> getGames() {
             return getV1(Responses.Games.class, "games");
@@ -42,6 +45,8 @@ public final class CurseAPI {
             return getV1(Responses.VersionTypes.class, "games/" + game + "/version-types");
         }
 
+
+        //Categories
         public CompletableFuture<ReturnResult<Responses.Categories>> getCategories(Query.Category category) {
             return getV1(Responses.Categories.class, "categories" + category.build().query());
         }
@@ -49,7 +54,6 @@ public final class CurseAPI {
 
 
         //Mods
-
         public CompletableFuture<ReturnResult<Responses.SearchMods>> searchMods(Query.Mod mod) {
             return getV1(Responses.SearchMods.class, "mods/search" + mod.build().query());
         }
@@ -77,25 +81,37 @@ public final class CurseAPI {
             return getV1(Responses.ModFile.class, "mods/" + modId +"/files/" + fileId);
         }
 
-        //Todo https://docs.curseforge.com/#get-mod-file
-        public CompletableFuture<ReturnResult<Responses.ModFiles>> getFiles(int modId) {
+        public CompletableFuture<ReturnResult<Responses.ModFiles>> getModFiles(int modId) {
             return getV1(Responses.ModFiles.class, "mods/" + modId + "/files");
+        }
+
+        //Todo https://docs.curseforge.com/#get-mod-file
+        @Deprecated
+        public CompletableFuture<ReturnResult<Responses.ModFiles>> getFiles(int modId) {
+            return getModFiles(modId);
         }
 
         public CompletableFuture<ReturnResult<Responses.Files>> getFiles(ModFilesRequestBody body) {
             return postV1(Responses.Files.class, body.toString(), "mods/files");
         }
 
-
-        public CompletableFuture<ReturnResult<Responses.String>> getFileChangelog(int modId, int fileId) {
+        public CompletableFuture<ReturnResult<Responses.String>> getModFileChangelog(int modId, int fileId) {
             return getV1(Responses.String.class, "mods/" + modId + "/files/" + fileId +"/changelog");
         }
 
-        public CompletableFuture<ReturnResult<Responses.DownloadURL>> getFileDownloadURl(int modId, int fileId) {
-            return getV1(Responses.DownloadURL.class, "mods/" + modId + "/files/" + fileId+ "/download-url");
+        @Deprecated
+        public CompletableFuture<ReturnResult<Responses.String>> getFileChangelog(int modId, int fileId) {
+            return getModFileChangelog(modId, fileId);
         }
 
+        public CompletableFuture<ReturnResult<Responses.String>> getModFileDownloadURl(int modId, int fileId) {
+            return getV1(Responses.String.class, "mods/" + modId + "/files/" + fileId+ "/download-url");
+        }
 
+        @Deprecated
+        public CompletableFuture<ReturnResult<Responses.String>> getFileDownloadURl(int modId, int fileId) {
+            return getModFileDownloadURl(modId, fileId);
+        }
 
 
         //Fingerprints
@@ -108,12 +124,24 @@ public final class CurseAPI {
         }
 
 
+
+        //Minecraft
+        public CompletableFuture<ReturnResult<MinecraftGameVersion[]>> getMinecraftVersions() {
+            return getV1(MinecraftGameVersion[].class, "minecraft/versions");
+        }
+
+
+        public CompletableFuture<ReturnResult<MinecraftGameVersion>> getMinecraftVersion(String gameVersionString) {
+            return getV1(MinecraftGameVersion.class, "minecraft/versions/" + gameVersionString);
+        }
+
+
         public <T> CompletableFuture<ReturnResult<T>> getV1(Class<T> tClass, String base) {
-            return getBase(tClass, "v1/" + base);
+            return getBase(tClass, KEY + base);
         }
 
         public <T> CompletableFuture<ReturnResult<T>> postV1(Class<T> tClass, String data, String base) {
-            return postBase(tClass, data, "v1/" + base);
+            return postBase(tClass, data, KEY + base);
         }
 
     }

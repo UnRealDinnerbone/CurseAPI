@@ -13,9 +13,7 @@ import java.util.concurrent.ExecutionException;
 public abstract class BaseTest {
 
     protected <T extends IResponse<?>> T test(CompletableFuture<ReturnResult<T>> completableFuture) throws ExecutionException, InterruptedException, IOException {
-
         ReturnResult<T> returnResult = completableFuture.get();
-
         Assert.assertNotNull(returnResult);
         Assert.assertNotNull(returnResult.getRawValue());
         Assert.assertNotNull(returnResult.get());

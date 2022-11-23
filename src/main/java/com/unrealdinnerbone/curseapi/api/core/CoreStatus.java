@@ -9,7 +9,9 @@ public enum CoreStatus implements IID
     PENDING_REVIEW(3),
     REJECTED(4),
     APPROVED(5),
-    LIVE(6);
+    LIVE(6),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 

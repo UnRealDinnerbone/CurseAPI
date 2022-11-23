@@ -16,6 +16,7 @@ public record Mod(int id,
                   boolean isFeatured,
                   int primaryCategoryId,
                   List<Category> categories,
+                  Integer classId,
                   List<ModAuthor> authors,
                   ModAsset logo,
                   List<ModAsset> screenshots,
@@ -25,5 +26,7 @@ public record Mod(int id,
                   String dateCreated,
                   String dateModified,
                   String dateReleased,
-                  Boolean allowModDistribution) {
+                  Boolean allowModDistribution,
+                  int gamePopularityRank,
+                  boolean isAvailable) {
 }

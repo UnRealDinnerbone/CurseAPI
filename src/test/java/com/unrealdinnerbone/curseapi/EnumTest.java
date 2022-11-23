@@ -11,7 +11,7 @@ import java.io.IOException;
 public class EnumTest
 {
     public static final Moshi MOSHI = new Moshi.Builder()
-            .add(Tnum.class, EnumJsonAdapter.create(Tnum.class))
+            .add(Tnum.class, EnumJsonAdapter.create(Tnum.class, Tnum.TWO))
             .build();
 
     public static enum Tnum implements IID {

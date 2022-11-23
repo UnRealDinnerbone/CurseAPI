@@ -13,7 +13,9 @@ public enum ModStatus implements IID
     INACTIVE(7),
     ABANDONED(8),
     DELETED(9),
-    UNDER_REVIEW(10);
+    UNDER_REVIEW(10),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 

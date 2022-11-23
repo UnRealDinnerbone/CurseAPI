@@ -6,7 +6,9 @@ public enum FileReleaseType implements IID
 {
     RELEASE(1),
     BETA(2),
-    ALPHA(3);
+    ALPHA(3),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 

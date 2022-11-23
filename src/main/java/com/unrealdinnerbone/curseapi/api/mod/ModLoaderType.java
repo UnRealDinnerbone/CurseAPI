@@ -8,7 +8,9 @@ public enum ModLoaderType implements IID
     FORGE(1),
     CAULDRON(2),
     LITE_LOADER(3),
-    FABRIC(4);
+    FABRIC(4),
+    UNKNOWN(-1),
+    ;
 
     private final int id;
 
