@@ -80,6 +80,11 @@ public class ModQuery {
         return this;
     }
 
+    public ModQuery slug(String slug) {
+        builder.withQuery("slug", slug);
+        return this;
+    }
+
 
 
     public Query build() {
