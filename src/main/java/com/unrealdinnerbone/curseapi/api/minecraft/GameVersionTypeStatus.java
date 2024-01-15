@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.minecraft;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum GameVersionTypeStatus implements IID {
     NORMAL(1),

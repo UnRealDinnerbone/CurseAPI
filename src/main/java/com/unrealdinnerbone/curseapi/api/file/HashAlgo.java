@@ -1,22 +1,18 @@
 package com.unrealdinnerbone.curseapi.api.file;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 public enum HashAlgo implements IID
 {
     SHA1("SHA-1", 1),
     MD5("MD5", 2),
-    UNKNOWN("ERROR", -1),
     ;
 
     private final int id;

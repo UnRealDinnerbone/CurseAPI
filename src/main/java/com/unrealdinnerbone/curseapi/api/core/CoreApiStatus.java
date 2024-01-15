@@ -1,12 +1,11 @@
 package com.unrealdinnerbone.curseapi.api.core;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum CoreApiStatus implements IID
 {
     PRIVATE(1),
     PUBLIC(2),
-    UNKNOWN(-1),
     ;
 
     private final int id;

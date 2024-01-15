@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.file;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum FileStatus implements IID
 {
@@ -19,7 +19,6 @@ public enum FileStatus implements IID
     BAKING(13),
     AWAITING_PUBLISHING(14),
     FAILED_PUBLISHING(15),
-    UNKNOWN(-1),
     ;
 
     private final int id;

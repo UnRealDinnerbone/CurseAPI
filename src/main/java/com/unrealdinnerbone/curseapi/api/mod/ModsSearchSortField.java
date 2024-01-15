@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.mod;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum ModsSearchSortField implements IID
 {

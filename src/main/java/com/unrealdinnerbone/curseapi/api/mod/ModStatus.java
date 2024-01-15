@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.mod;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum ModStatus implements IID
 {
@@ -14,7 +14,6 @@ public enum ModStatus implements IID
     ABANDONED(8),
     DELETED(9),
     UNDER_REVIEW(10),
-    UNKNOWN(-1),
     ;
 
     private final int id;

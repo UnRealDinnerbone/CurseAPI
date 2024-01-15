@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.core;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum CoreStatus implements IID
 {
@@ -10,7 +10,6 @@ public enum CoreStatus implements IID
     REJECTED(4),
     APPROVED(5),
     LIVE(6),
-    UNKNOWN(-1),
     ;
 
     private final int id;

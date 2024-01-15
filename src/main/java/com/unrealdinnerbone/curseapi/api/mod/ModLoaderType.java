@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.mod;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum ModLoaderType implements IID
 {
@@ -9,7 +9,6 @@ public enum ModLoaderType implements IID
     CAULDRON(2),
     LITE_LOADER(3),
     FABRIC(4),
-    UNKNOWN(-1),
     ;
 
     private final int id;

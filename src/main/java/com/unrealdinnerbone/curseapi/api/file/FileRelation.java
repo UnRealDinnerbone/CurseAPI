@@ -1,6 +1,6 @@
 package com.unrealdinnerbone.curseapi.api.file;
 
-import com.unrealdinnerbone.curseapi.lib.json.IID;
+import com.unrealdinnerbone.unreallib.json.api.IID;
 
 public enum FileRelation implements IID
 {
@@ -10,7 +10,6 @@ public enum FileRelation implements IID
     TOOL(4),
     INCOMPATIBLE(5),
     INCLUDE(6),
-    UNKNOWN(-1),
     ;
 
     private final int id;
