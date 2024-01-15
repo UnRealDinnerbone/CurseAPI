@@ -68,7 +68,7 @@ public final class CurseAPI {
 
         //Mods
         public IResult<Responses.SearchMods> searchMods(ModQuery mod) {
-            return getV1(Responses.SearchMods.class, "mods/search" + mod.build().query());
+            return getV1(Responses.SearchMods.class, "mods/search?" + mod.build().query());
         }
 
 
